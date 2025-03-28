@@ -1,5 +1,5 @@
 .env
-**/*.csv
+/*.csv
 
 __pycache__/
 .ruff_cache/
