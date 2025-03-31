@@ -4,10 +4,10 @@ The [**Allthings Egypt**](https://letterboxd.com/prog_jacob/list/allthings-egypt
 
 ## &#128680; Help Needed: 1,000 More Films to Add! &#128680;
 
-There is an additional <b>list of 4,500 movies</b>, which I estimate contains around <b>1,000 films not yet included here</b>. However, there's <b>no reliable way to import them</b> because they lack their <b>original titles</b>. To fix this, I need help verifying and retrieving these missing titles. Anyone can <b>anonymously contribute</b> by adding a movie or two to this 👉 <a href="https://docs.google.com/spreadsheets/d/1UD2LSrXbXFD8ttaELjEe_JtkTwyVUyZm1sadbZDgoRA/edit?usp=sharing"><b>Google Sheet</b></a> 👈.
+There is an additional <b>list of 4,700 movies</b>, which I estimate contains around <b>1,000 films not yet included here</b>. However, there's <b>no reliable way to import them</b> because they lack their <b>original titles</b>. To fix this, I need help verifying and retrieving these missing titles. Anyone can <b>anonymously contribute</b> by adding a movie or two to this 👉 <a href="https://docs.google.com/spreadsheets/d/1UD2LSrXbXFD8ttaELjEe_JtkTwyVUyZm1sadbZDgoRA/edit?usp=sharing"><b>Google Sheet</b></a> 👈.
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,413%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
+[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,722%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
 
 ## About this Project
 
