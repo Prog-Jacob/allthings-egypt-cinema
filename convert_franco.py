@@ -1,20 +1,10 @@
-import asyncio
-import aiohttp
-from cross_check import load_csv, save_csv
-
-# This script is under development.
-# An LLM server must be up locally to run this script.
-# I use LM Studio for this purpose, with qwen2.5.1-coder-7b-instruct model.
+from asyncio import run
+from LLM import ask_many
+from config import get_config
+from utils import load_csv, save_csv
 
 
-LLM_URL = "http://127.0.0.1:1234/v1/chat/completions"
-
-
-async def fetch_fixed_titles(session, movie):
-    messages = [
-        {
-            "role": "system",
-            "content": """
+system_message = """
 You will be given a movie title. If the movie title is in Arabic, respond with the movie title. If in Franco (Arabic written in English letters), respond with the original Arabic title. If in English or there's any issue, respond with empty string.
 
 Examples:
@@ -22,40 +12,27 @@ Examples:
 - "Fajia'a fok el haram" → "فاجعة فوق الهرم"
 - "El bahr biyidhak lesh" → "البحر بيضحك ليش"
 - "Home Cookin: Over 100 Years in the Making" → ""
-""",
-        },
-        {"role": "user", "content": movie["Title"]},
-    ]
-    payload = {
-        "model": "qwen2.5.1-coder-7b-instruct",
-        "messages": messages,
-        "temperature": 0.7,
-        "stream": False,
-    }
-
-    async with session.post(LLM_URL, json=payload) as response:
-        result = await response.json()
-        return result.get("choices", [{}])[0].get("message", {}).get("content", "")
+"""
 
 
-async def process_titles(matches):
-    async with aiohttp.ClientSession() as session:
-        tasks = [fetch_fixed_titles(session, match) for match in matches]
-        responses = await asyncio.gather(*tasks)
+async def convert_movies_from_franco(batch, load_path, save_path):
+    movies = load_csv(load_path)
 
-        for j, title in enumerate(responses):
-            matches[j]["Title"] = title.strip().strip('"')
+    tasks = await ask_many(
+        system_message,
+        [match["Title"] for match in movies[batch * 100 : (batch + 1) * 100]],
+    )
+    for i, task in enumerate(tasks):
+        movies[batch * 100 + i]["Title"] = task
 
-
-def main():
-    batch = int(input("Enter batch number: "))
-    matches = load_csv("matches_corrected.csv")
-
-    asyncio.run(process_titles(matches[batch * 100 : (batch + 1) * 100]))
-
-    save_csv("matches_corrected.csv", matches, fieldnames=matches[0].keys())
-    print("Corrected titles saved to matches_corrected.csv")
+    save_csv(save_path, movies, fieldnames=movies[0].keys())
+    print("Corrected titles saved to ", save_path)
 
 
 if __name__ == "__main__":
-    main()
+    config = get_config("llm")
+    batch = config["batch"]
+    save_path = config["save_path"]
+    load_path = config["load_path"]
+
+    run(convert_movies_from_franco(batch, load_path, save_path))
