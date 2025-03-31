@@ -1,4 +1,5 @@
 from fuzzydict import Dict
+from config import get_config
 from utils import load_csv, save_csv
 
 
@@ -24,20 +25,17 @@ def cross_check(host_list, dest_list):
     return [dest_set[item] for item in matches]
 
 
-def main():
-    first_list = load_csv(
-        "./data/allthings-egypt.csv"
-    )  # Position,Name,Year,URL,Description  ->   Downloaded from Letterboxd
-    second_list = load_csv(
-        "./data/imdb-mix-1to6396.csv"
-    )  # imdbID,Title,Year  ->   Scraped with ./scrapers/imdb.js
-
-    matches = cross_check(first_list, second_list)
-
-    print(f"Found {len(matches)} matches:")
-    save_csv("matches.csv", matches, fieldnames=matches[0].keys())
-    print("Matches saved to matches.csv")
-
-
 if __name__ == "__main__":
-    main()
+    config = get_config("cross_check")
+    host_path = config["host_path"]
+    dest_path = config["dest_path"]
+    save_path = config["save_path"]
+
+    host_list = load_csv(host_path)
+    dest_list = load_csv(dest_path)
+
+    matches = cross_check(host_list, dest_list)
+    print(f"Found {len(matches)} matches:")
+
+    save_csv(save_path, matches, fieldnames=matches[0].keys())
+    print("Matches saved to ", save_path)
