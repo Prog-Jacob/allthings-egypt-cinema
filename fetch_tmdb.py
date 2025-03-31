@@ -11,15 +11,28 @@ API_KEY = os.getenv("TMDB_API_KEY")
 FIELDNAMES = ["tmdbID", "Title", "Year"]
 TV_SHOWS_URL = "https://api.themoviedb.org/3/discover/tv"
 MOVIES_URL = "https://api.themoviedb.org/3/discover/movie"
+TV_SHOWS_SEARCH_URL = "https://api.themoviedb.org/3/search/tv"
+MOVIES_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
 
-params = {
+base_params = {
     "api_key": API_KEY,
     "include_adult": "true",
-    "with_origin_country": "EG",
+}
+movies_params = {
+    "url": MOVIES_URL,
+    "title_key": "title",
+    "params": base_params,
+    "year_key": "release_date",
+}
+tv_shows_params = {
+    "url": TV_SHOWS_URL,
+    "title_key": "name",
+    "params": base_params,
+    "year_key": "first_air_date",
 }
 
 
-def fetch_entries(url, title_key, year_key):
+def fetch_entries(url, title_key, year_key, params):
     page = 1
     movies = []
     params["sort_by"] = f"{year_key}.asc"
@@ -42,7 +55,7 @@ def fetch_entries(url, title_key, year_key):
             )
 
         print(f"Fetched page {page}")
-        time.sleep(0.1)
+        time.sleep(0.02)
         if len(results) == 0:
             break
         page += 1
@@ -50,9 +63,13 @@ def fetch_entries(url, title_key, year_key):
     return movies
 
 
-if __name__ == "__main__":
-    movies = fetch_entries(MOVIES_URL, "title", "release_date")
-    tv_shows = fetch_entries(TV_SHOWS_URL, "name", "first_air_date")
+def _process_call(fetch_params, save_path):
+    entries = fetch_entries(**fetch_params)
+    save_csv(save_path, entries, FIELDNAMES)
 
-    save_csv(f"./data/tmdb-mix-1to{len(movies)}.csv", movies, FIELDNAMES)
-    save_csv(f"./data/tmdb-mix-1to{len(tv_shows) + 1}.csv", tv_shows, FIELDNAMES)
+
+if __name__ == "__main__":
+    movies_params["params"]["with_origin_country"] = "EG"
+    tv_shows_params["params"]["with_origin_country"] = "EG"
+    _process_call(movies_params, save_path="./data/tmdb-movies.csv")
+    _process_call(tv_shows_params, save_path="./data/tmdb-movies.csv")
