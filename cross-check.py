@@ -1,5 +1,4 @@
 from fuzzydict import Dict
-from config import get_config
 from utils import load_csv, save_csv
 
 
@@ -25,8 +24,7 @@ def cross_check(host_list, dest_list):
     return [dest_set[item] for item in matches]
 
 
-if __name__ == "__main__":
-    config = get_config("cross_check")
+def main(config):
     host_path = config["host_path"]
     dest_path = config["dest_path"]
     save_path = config["save_path"]

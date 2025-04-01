@@ -1,6 +1,5 @@
 from asyncio import run
 from LLM import ask_many
-from config import get_config
 from utils import load_csv, save_csv
 
 
@@ -29,8 +28,7 @@ async def convert_movies_from_franco(batch, load_path, save_path):
     print("Corrected titles saved to ", save_path)
 
 
-if __name__ == "__main__":
-    config = get_config("llm")
+def main(config):
     batch = config["batch"]
     save_path = config["save_path"]
     load_path = config["load_path"]
