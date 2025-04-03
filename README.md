@@ -1,13 +1,17 @@
 # Allthings Egypt
 
+<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="60%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/user-attachments/assets/e40565d4-776f-40d8-a8fc-3a6165af7f2e"></a>
+
 The [**Allthings Egypt**](https://letterboxd.com/prog_jacob/list/allthings-egypt/) list gathers <b>Egyptian films</b> as well as <b>international productions</b> that feature Egypt as a setting, subject, or part of the narrative. It is organized <em>chronologically by <b>release date</b></em>, from the oldest to the newest, to provide a sense of how Egypt’s representation in cinema has evolved over time.
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,739%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
+
+<br>
 
 ## &#128680; Help Needed: 1,000 More Films to Add! &#128680;
 
 There is an additional <b>list of 4,700 movies</b>, which I estimate contains around <b>1,000 films not yet included here</b>. However, there's <b>no reliable way to import them</b> because they lack their <b>original titles</b>. To fix this, I need help verifying and retrieving these missing titles. Anyone can <b>anonymously contribute</b> by adding a movie or two to this 👉 <a href="https://docs.google.com/spreadsheets/d/1UD2LSrXbXFD8ttaELjEe_JtkTwyVUyZm1sadbZDgoRA/edit?usp=sharing"><b>Google Sheet</b></a> 👈.
-
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,722%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
 
 ## About this Project
 
