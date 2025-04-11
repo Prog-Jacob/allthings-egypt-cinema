@@ -1,3 +1,4 @@
+from rapidfuzz import process
 from Levenshtein import distance
 
 
@@ -5,20 +6,15 @@ class Dict(dict):
     def __init__(self, elements, threshold=5):
         super().__init__(elements)
         self.threshold = threshold
-        self.map = dict(elements)
 
     def get(self, key, default=None):
-        if key in self.map:
-            return self.map[key]
-        threshold = 1000000
-        best_match = None
+        if key in self:
+            return self[key]
 
-        for item_title, item_year in self.items():
-            dist = distance(item_title, key)
-            if dist < threshold:
-                threshold = dist
-                best_match = item_year
+        closest_key, closest_distance, _ = process.extractOne(
+            key, self.keys(), scorer=distance
+        )
 
-        if threshold <= min(self.threshold, len(key) // 4):
-            return best_match
+        if closest_distance <= min(self.threshold, len(key) // 4):
+            return self[closest_key]
         return default

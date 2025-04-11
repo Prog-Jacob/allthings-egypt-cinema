@@ -5,7 +5,7 @@
 The [**Allthings Egypt**](https://letterboxd.com/prog_jacob/list/allthings-egypt/) list gathers <b>Egyptian films</b> as well as <b>international productions</b> that feature Egypt as a setting, subject, or part of the narrative. It is organized <em>chronologically by <b>release date</b></em>, from the oldest to the newest, to provide a sense of how Egypt’s representation in cinema has evolved over time.
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,739%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
+[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,766%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
 
 <br>
 

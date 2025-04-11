@@ -1,4 +1,5 @@
 import csv
+import time
 
 
 def save_csv(filename, data, fieldnames):
@@ -45,3 +46,14 @@ def take_columns_csv(filename, columns):
     data = load_csv(filename)
     data = [{key: item[key] for key in columns} for item in data]
     save_csv(f"{filename}-{'-'.join(columns)}.csv", data, fieldnames=columns)
+
+
+def execution_time(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        print(f"Running {func.__name__}...")
+        result = func(*args, **kwargs)
+        print(f"Execution time: {time.time() - start_time:.4f} seconds")
+        return result
+
+    return wrapper
