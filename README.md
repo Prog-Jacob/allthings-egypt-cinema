@@ -27,6 +27,53 @@ This repository includes several datasets, each representing movie lists from di
 - [**`TMDb Dataset (TV Shows)`**](./data/tmdb-mix-1to1147.csv) – A dataset containing TV shows from [**TMDb**](https://developer.themoviedb.org/reference/discover-tv).
 - [**`Allthings Egypt List`**](./data/allthings-egypt.csv) – The primary dataset compiling all relevant films related to Egypt.
 
+## Usage
+
+To use, run `python run.py --help`:
+
+```bash
+usage: run.py [-h] {convert-franco,is-franco,cross-check,tmdb-api,LLM} ...
+
+Experiments and Configuration for the Allthings Egypt Project.
+
+positional arguments:
+  {convert-franco,is-franco,cross-check,tmdb-api,LLM}
+                        Specify which script to run.
+    convert-franco      Convert Franco movie titles to their Arabic counterparts.
+    is-franco           Check whether movie titles are in Franco or Arabic (responds with NO) or not (responds with YES).
+    cross-check         Find movies in the destination CSV file, which the host CSV file doesn't contain.
+    tmdb-api            Discover Egyptian movies or TV shows or search form them in the TMDB API.
+    LLM                 Ask the running local LLM server any number of questions.
+
+options:
+  -h, --help            show this help message and exit
+```
+
+To use the CSV utility functions, run `python utils.py --help`:
+
+```bash
+SYNOPSIS
+    utils.py COMMAND
+
+COMMANDS
+    COMMAND is one of the following:
+
+     save
+       Saves a list of dictionaries to a CSV file.
+
+     load
+       Loads a CSV file into a list of dictionaries.
+
+     deduplicate
+       Deduplicates a CSV file rows by a given key in place.
+
+     take-columns
+       Takes only the specified columns from a CSV file in a new file.
+
+     numerize-column
+       Converts a CSV file column to integers in place.
+```
+
 ## Available Scripts
 
 ### Data Collection

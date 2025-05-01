@@ -1,5 +1,6 @@
 import csv
 import time
+from fire import Fire
 
 
 def save_csv(filename, data, fieldnames):
@@ -11,6 +12,7 @@ def save_csv(filename, data, fieldnames):
 
 
 def load_csv(filename):
+    """Loads a CSV file into a list of dictionaries."""
     with open(filename, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         return list(reader)
@@ -57,3 +59,15 @@ def execution_time(func):
         return result
 
     return wrapper
+
+
+if __name__ == "__main__":
+    Fire(
+        {
+            "save": save_csv,
+            "load": load_csv,
+            "deduplicate": deduplicate_csv,
+            "take-columns": take_columns_csv,
+            "numerize-column": numeric_column_csv,
+        }
+    )
