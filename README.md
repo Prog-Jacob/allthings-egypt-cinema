@@ -1,11 +1,11 @@
 # Allthings Egypt
 
-<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="60%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/user-attachments/assets/e40565d4-776f-40d8-a8fc-3a6165af7f2e"></a>
+<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="60%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://raw.githubusercontent.com/Prog-Jacob/allthings-egypt-cinema/refs/heads/main/Screenshot_2025-05-01_03-13-42.png"></a>
 
 The [**Allthings Egypt**](https://letterboxd.com/prog_jacob/list/allthings-egypt/) list gathers <b>Egyptian films</b> as well as <b>international productions</b> that feature Egypt as a setting, subject, or part of the narrative. It is organized <em>chronologically by <b>release date</b></em>, from the oldest to the newest, to provide a sense of how Egypt’s representation in cinema has evolved over time.
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,766%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
+[![Letterboxd](https://img.shields.io/badge/Letterboxd-5,770%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
 
 <br>
 
