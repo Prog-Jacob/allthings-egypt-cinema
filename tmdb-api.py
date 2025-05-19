@@ -77,5 +77,9 @@ def main(args):
             movies_params["params"]["with_origin_country"] = "EG"
             tv_shows_params["params"]["with_origin_country"] = "EG"
 
-    entries = fetch_entries(**movies_params) + fetch_entries(**tv_shows_params)
+    entries = []
+    if args["exclude_movies"] is False:
+        entries += fetch_entries(**movies_params)
+    if args["exclude_tv_shows"] is False:
+        entries += fetch_entries(**tv_shows_params)
     save_csv(args["save_path"], entries, FIELDNAMES)

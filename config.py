@@ -39,6 +39,16 @@ cross_check_args = {
 
 tmdb_discover_args = {
     "--save-path": save_path_args,
+    "--exclude-movies": {
+        "type": bool,
+        "default": False,
+        "help": "If True, no movies will be discovered.",
+    },
+    "--exclude-tv-shows": {
+        "type": bool,
+        "default": False,
+        "help": "If True, no TV shows will be discovered.",
+    },
 }
 
 tmdb_search_args = {
