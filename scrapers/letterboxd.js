@@ -3,7 +3,7 @@
 import puppeteer from "puppeteer";
 import {writeFile} from "fs/promises";
 
-const MAX_CONCURRENT_TABS = 10;
+const MAX_CONCURRENT_TABS = 5;
 const OUTPUT_FILE = "letterboxd_movies.csv";
 
 async function fetchMoviesPage(pageNum, page) {

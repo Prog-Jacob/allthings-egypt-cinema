@@ -1,9 +1,11 @@
 .env
 /data
 /*.csv
+/assets
 
 __pycache__/
 .ruff_cache/
+.DS_Store
 
 node_modules/
-pnpm-lock.yaml
+pnpm-*.yaml
