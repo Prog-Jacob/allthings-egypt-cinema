@@ -24,17 +24,38 @@ franco_args = {
 }
 
 cross_check_args = {
-    "--host-path": {
+    "--first-path": {
         "type": str,
         "default": None,
-        "help": "Path to the host CSV file. Must have column 'Name'.",
+        "help": "Path to the first CSV file. Must have column 'Name'.",
     },
-    "--dest-path": {
+    "--second-path": {
         "type": str,
         "default": None,
-        "help": "Path to the destination CSV file. Must have column 'Title'.",
+        "help": "Path to the second CSV file. Must have column 'Title'.",
+    },
+    "--first-key": {
+        "type": str,
+        "default": "Name",
+        "help": "Column name to use as the key in the first CSV file.",
+    },
+    "--second-key": {
+        "type": str,
+        "default": "Title",
+        "help": "Column name to use as the key in the second CSV file.",
     },
     "--save-path": save_path_args,
+    "--join-type": {
+        "type": str,
+        "default": "inner-right",
+        "choices": ["inner-left", "inner-right", "outer", "left-outer", "right-outer"],
+        "help": "Type of join to perform.",
+    },
+    "--is-fuzzy": {
+        "type": bool,
+        "default": False,
+        "help": "If True, fuzzy matching will be used.",
+    },
 }
 
 tmdb_discover_args = {
@@ -83,6 +104,7 @@ def get_config():
         dest="experiment", required=True, help="Specify which script to run."
     )
 
+    # Franco converters
     convert_franco_parser = experiment_subparsers.add_parser(
         "convert-franco",
         help="Convert Franco movie titles to their Arabic counterparts.",
@@ -97,6 +119,7 @@ def get_config():
     is_franco_parser.set_defaults(func=_set_defaults(franco_args))
     _add_arguments(is_franco_parser, franco_args)
 
+    # Cross-check
     cross_check_parser = experiment_subparsers.add_parser(
         "cross-check",
         help="Find movies in the destination CSV file, which the host CSV file doesn't contain.",
@@ -104,33 +127,30 @@ def get_config():
     cross_check_parser.set_defaults(func=_set_defaults(cross_check_args))
     _add_arguments(cross_check_parser, cross_check_args)
 
+    # TMDB API
     tmdb_parser = experiment_subparsers.add_parser(
         "tmdb-api",
-        help="Discover Egyptian movies or TV shows or search form them in the TMDB API.",
+        help="Discover or search Egyptian movies and TV shows in the TMDB API.",
     )
     tmdb_calls_parser = tmdb_parser.add_subparsers(
-        dest="action",
-        required=True,
-        help="Specify whether to discover Egyptian movies or TV shows or search for them.",
+        dest="action", required=True, help="Choose TMDB action."
     )
 
     discover_parser = tmdb_calls_parser.add_parser(
-        "discover",
-        help="Discover Egyptian movies and TV shows.",
+        "discover", help="Discover Egyptian movies and TV shows."
     )
     _add_arguments(discover_parser, tmdb_discover_args)
     discover_parser.set_defaults(func=_set_defaults(tmdb_discover_args))
 
     search_parser = tmdb_calls_parser.add_parser(
-        "search",
-        help="Search for movies and TV shows given a query.",
+        "search", help="Search for movies and TV shows given a query."
     )
     _add_arguments(search_parser, tmdb_search_args)
     search_parser.set_defaults(func=_set_defaults(tmdb_search_args))
 
+    # LLM
     llm_parser = experiment_subparsers.add_parser(
-        "LLM",
-        help="Ask the running local LLM server any number of questions.",
+        "LLM", help="Ask the running local LLM server any number of questions."
     )
     llm_parser.set_defaults(func=_set_defaults(llm_args))
     _add_arguments(llm_parser, llm_args)
@@ -141,6 +161,7 @@ def get_config():
 
 
 def _add_arguments(parser, args_data):
+    """Add arguments from dict configs, with autocomplete support if choices exist."""
     for key, value in args_data.items():
         parser.add_argument(
             key,
@@ -148,6 +169,7 @@ def _add_arguments(parser, args_data):
             type=value["type"],
             nargs=value.get("nargs", None),
             required=value["default"] is None,
+            choices=value.get("choices", None),
         )
 
 
