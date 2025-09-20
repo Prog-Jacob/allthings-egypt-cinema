@@ -1,15 +1,15 @@
 # Allthings Egypt
 
-<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="100%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.08.31/Allthings-Egypt-Wide.png"></a>
+<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="100%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.09.21/Allthings-Egypt-Wide.png"></a>
 
 <br>
 
-<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="60%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.08.31/Allthings-Egypt-Narrow.png"></a>
+<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="60%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.09.21/Allthings-Egypt-Narrow.png"></a>
 
 The [**Allthings Egypt**](https://letterboxd.com/prog_jacob/list/allthings-egypt/) list gathers <b>Egyptian films</b> as well as <b>international productions</b> that feature Egypt as a setting, subject, or part of the narrative. It is organized <em>chronologically by <b>release date</b></em>, from the oldest to the newest, to provide a sense of how Egypt’s representation in cinema has evolved over time.
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Letterboxd](https://img.shields.io/badge/Letterboxd-6,062%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
+[![Letterboxd](https://img.shields.io/badge/Letterboxd-6,098%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
 
 <br>
 
@@ -25,11 +25,11 @@ This repository contains the scripts and data used to compile the [**Allthings E
 
 This repository includes several datasets, each representing movie lists from different sources:
 
-- [**`Letterboxd Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.08.31/letterboxd-mix-1to4940.csv) – A list of [**Letterboxd**](https://letterboxd.com/films/country/egypt/) movie URLs.
-- [**`IMDb Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.08.31/imdb-mix-1to6396.csv) – A collection of movies scraped from [**IMDb**](https://www.imdb.com/search/title/?title_type=feature,tv_series,short,tv_miniseries,tv_movie,tv_special,tv_short,video&countries=EG&sort=release_date,asc).
-- [**`TMDb Dataset (Movies)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.08.31/tmdb-mix-1to4539.csv) – A dataset containing movies from [**TMDb**](https://developer.themoviedb.org/reference/discover-movie).
-- [**`TMDb Dataset (TV Shows)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.08.31/tmdb-mix-1to1236.csv) – A dataset containing TV shows from [**TMDb**](https://developer.themoviedb.org/reference/discover-tv).
-- [**`Allthings Egypt List`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.08.31/allthings-egypt.csv) – The primary dataset compiling all relevant films related to Egypt.
+- [**`Letterboxd Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.09.21/letterboxd-mix-1to4996.csv) – A list of [**Letterboxd**](https://letterboxd.com/films/country/egypt/) movie URLs.
+- [**`IMDb Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.09.21/imdb-mix-1to6396.csv) – A collection of movies scraped from [**IMDb**](https://www.imdb.com/search/title/?title_type=feature,tv_series,short,tv_miniseries,tv_movie,tv_special,tv_short,video&countries=EG&sort=release_date,asc).
+- [**`TMDb Dataset (Movies)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.09.21/tmdb-mix-movies-1to4587.csv) – A dataset containing movies from [**TMDb**](https://developer.themoviedb.org/reference/discover-movie).
+- [**`TMDb Dataset (TV Shows)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.09.21/tmdb-mix-tvshows-1to1253.csv) – A dataset containing TV shows from [**TMDb**](https://developer.themoviedb.org/reference/discover-tv).
+- [**`Allthings Egypt List`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2025.09.21/allthings-egypt.csv) – The primary dataset compiling all relevant films related to Egypt.
 
 ## Usage
 
@@ -46,7 +46,7 @@ positional arguments:
     convert-franco      Convert Franco movie titles to their Arabic counterparts.
     is-franco           Check whether movie titles are in Franco or Arabic (responds with NO) or not (responds with YES).
     cross-check         Find movies in the destination CSV file, which the host CSV file doesn't contain.
-    tmdb-api            Discover Egyptian movies or TV shows or search form them in the TMDB API.
+    tmdb-api            Discover or search Egyptian movies and TV shows in the TMDB API.
     LLM                 Ask the running local LLM server any number of questions.
 
 options:
