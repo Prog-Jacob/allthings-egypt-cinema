@@ -32,6 +32,13 @@ def deduplicate_csv(filename, key=0):
     save_csv(filename, deduplicated, fieldnames=data[0].keys())
 
 
+def sort_csv(filename, key="Year", reverse=False):
+    """Sorts a CSV file by a given key in place."""
+    data = load_csv(filename)
+    data.sort(key=lambda x: x[key], reverse=reverse)
+    save_csv(filename, data, fieldnames=data[0].keys())
+
+
 def numeric_column_csv(filename, key="Year", default=""):
     """Converts a CSV file column to integers in place."""
     data = load_csv(filename)
@@ -66,6 +73,7 @@ if __name__ == "__main__":
         {
             "save": save_csv,
             "load": load_csv,
+            "sort": sort_csv,
             "deduplicate": deduplicate_csv,
             "take-columns": take_columns_csv,
             "numerize-column": numeric_column_csv,
