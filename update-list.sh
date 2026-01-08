@@ -4,6 +4,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ASSETS_DIR="$SCRIPT_DIR/assets"
 TEMP_DIR="$SCRIPT_DIR/temp"
+README="$SCRIPT_DIR/README.md"
+VERSION="v$(date +%Y.%m.%d)"
 
 mkdir -p "$TEMP_DIR"
 
@@ -16,77 +18,98 @@ count_lines() {
     tail -n +2 "$1" 2>/dev/null | wc -l | tr -d ' '
 }
 
-update_asset() {
+extract_count() {
+    echo "$1" | grep -oE '[0-9]+\.csv$' | grep -oE '[0-9]+'
+}
+
+process_source() {
     local name="$1"
-    local asset="$2"
-    local fresh="$3"
+    local pattern="$2"
+    local fetch_cmd="$3"
     local key="$4"
+
+    local asset
+    asset="$(find_asset "${pattern}-1to*.csv")" || true
+    [[ -z "$asset" ]] && return
+
+    local fresh_file="$TEMP_DIR/${name}-fresh.csv"
 
     echo "[$name] Current: $(basename "$asset")"
 
+    # Fetch fresh data
+    eval "$fetch_cmd"
+
+    # Cross-check for new entries
     python "$SCRIPT_DIR/run.py" cross-check \
         --first-path "$asset" \
-        --second-path "$fresh" \
+        --second-path "$fresh_file" \
         --first-key "$key" \
         --second-key "$key" \
         --join-type right-outer \
         --is-fuzzy False \
         --save-path "$TEMP_DIR/new-$name"
 
-    echo "[$name] Cross-check saved: new-${name}_0.csv"
-
+    # Replace asset only if fresh data has more entries
+    local old_count
     local fresh_count
-    fresh_count="$(count_lines "$fresh")"
+    old_count="$(extract_count "$asset")"
+    fresh_count="$(count_lines "$fresh_file")"
 
-    local new_asset="${asset%%-1to*}-1to${fresh_count}.csv"
+    if [[ "$fresh_count" -gt "$old_count" ]]; then
+        local new_asset="$ASSETS_DIR/${pattern}-1to${fresh_count}.csv"
 
-    mv "$fresh" "$new_asset"
-    rm "$asset"
+        mv "$fresh_file" "$new_asset"
+        rm "$asset"
 
-    echo "[$name] Replaced with $fresh_count entries -> $(basename "$new_asset")"
+        echo "[$name] Updated: $(basename "$new_asset") (+$((fresh_count - old_count)))"
+    else
+        rm "$fresh_file"
+        echo "[$name] No new entries"
+    fi
 }
 
 # TMDb Movies
-if asset="$(find_asset "tmdb-mix-movies-1to*.csv")"; [[ -n "$asset" ]]; then
-    python "$SCRIPT_DIR/run.py" tmdb-api discover \
+process_source \
+    "tmdb-movies" \
+    "tmdb-mix-movies" \
+    "python '$SCRIPT_DIR/run.py' tmdb-api discover \
         --exclude-tv-shows True \
-        --save-path "$TEMP_DIR/tmdb-movies-fresh.csv"
-
-    update_asset \
-        "tmdb-movies" \
-        "$asset" \
-        "$TEMP_DIR/tmdb-movies-fresh.csv" \
-        "tmdbID"
-fi
+        --save-path '$TEMP_DIR/tmdb-movies-fresh.csv'" \
+    "tmdbID"
 
 # TMDb TV Shows
-if asset="$(find_asset "tmdb-mix-tvshows-1to*.csv")"; [[ -n "$asset" ]]; then
-    python "$SCRIPT_DIR/run.py" tmdb-api discover \
+process_source \
+    "tmdb-tvshows" \
+    "tmdb-mix-tvshows" \
+    "python '$SCRIPT_DIR/run.py' tmdb-api discover \
         --exclude-movies True \
-        --save-path "$TEMP_DIR/tmdb-tvshows-fresh.csv"
-
-    update_asset \
-        "tmdb-tvshows" \
-        "$asset" \
-        "$TEMP_DIR/tmdb-tvshows-fresh.csv" \
-        "tmdbID"
-fi
+        --save-path '$TEMP_DIR/tmdb-tvshows-fresh.csv'" \
+    "tmdbID"
 
 # Letterboxd
-if asset="$(find_asset "letterboxd-mix-1to*.csv")"; [[ -n "$asset" ]]; then
-    (
-        cd "$SCRIPT_DIR/scrapers"
-        npm run run:letterbox --silent
-    )
+process_source \
+    "letterboxd" \
+    "letterboxd-mix" \
+    "(cd '$SCRIPT_DIR/scrapers' && npm run run:letterbox --silent) && \
+        mv '$SCRIPT_DIR/scrapers/letterboxd_movies.csv' '$TEMP_DIR/letterboxd-fresh.csv'" \
+    "url"
 
-    mv "$SCRIPT_DIR/scrapers/letterboxd_movies.csv" \
-       "$TEMP_DIR/letterboxd-fresh.csv"
+# Update README
+update_readme() {
+    local pattern="$1"
+    local asset
+    asset="$(find_asset "${pattern}-1to*.csv")" || true
+    [[ -z "$asset" ]] && return
 
-    update_asset \
-        "letterboxd" \
-        "$asset" \
-        "$TEMP_DIR/letterboxd-fresh.csv" \
-        "url"
-fi
+    local count
+    count="$(extract_count "$asset")"
+    sed -i '' -E "s/${pattern}-1to[0-9]+\.csv/${pattern}-1to${count}.csv/g" "$README"
+}
 
+sed -i '' -E "s/v[0-9]{4}\.[0-9]{2}\.[0-9]{2}/${VERSION}/g" "$README"
+update_readme "tmdb-mix-movies"
+update_readme "tmdb-mix-tvshows"
+update_readme "letterboxd-mix"
+
+echo "[readme] Updated to $VERSION"
 echo "Done. Temp files in: $TEMP_DIR"
