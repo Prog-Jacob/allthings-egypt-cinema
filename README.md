@@ -1,15 +1,15 @@
 # Allthings Egypt
 
-<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="100%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.05.03/Allthings-Egypt-Wide.png"></a>
+<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="100%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.06.29/Allthings-Egypt-Wide.png"></a>
 
 <br>
 
-<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="60%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.05.03/Allthings-Egypt-Narrow.png"></a>
+<a href="https://letterboxd.com/prog_jacob/list/allthings-egypt/"><img width="60%" align="right" alt="Allthings Egypt list's thumbnail on Letterboxd." src="https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.06.29/Allthings-Egypt-Narrow.png"></a>
 
 The [**Allthings Egypt**](https://letterboxd.com/prog_jacob/list/allthings-egypt/) list gathers <b>Egyptian films</b> as well as <b>international productions</b> that feature Egypt as a setting, subject, or part of the narrative. It is organized <em>chronologically by <b>release date</b></em>, from the oldest to the newest, to provide a sense of how Egypt’s representation in cinema has evolved over time.
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Letterboxd](https://img.shields.io/badge/Letterboxd-6,395%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
+[![Letterboxd](https://img.shields.io/badge/Letterboxd-6,452%20Movies-movie?logo=letterboxd&logoColor=fff&style=flat)](https://letterboxd.com/prog_jacob/list/allthings-egypt/)
 
 <br>
 
@@ -25,11 +25,11 @@ This repository contains the scripts and data used to compile the [**Allthings E
 
 This repository includes several datasets, each representing movie lists from different sources:
 
-- [**`Letterboxd Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.05.03/letterboxd-mix-1to5108.csv) – A list of [**Letterboxd**](https://letterboxd.com/films/country/egypt/) movie URLs.
-- [**`IMDb Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.05.03/imdb-mix-1to6396.csv) – A collection of movies scraped from [**IMDb**](https://www.imdb.com/search/title/?title_type=feature,tv_series,short,tv_miniseries,tv_movie,tv_special,tv_short,video&countries=EG&sort=release_date,asc).
-- [**`TMDb Dataset (Movies)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.05.03/tmdb-mix-movies-1to4832.csv) – A dataset containing movies from [**TMDb**](https://developer.themoviedb.org/reference/discover-movie).
-- [**`TMDb Dataset (TV Shows)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.05.03/tmdb-mix-tvshows-1to1421.csv) – A dataset containing TV shows from [**TMDb**](https://developer.themoviedb.org/reference/discover-tv).
-- [**`Allthings Egypt List`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.05.03/allthings-egypt.csv) – The primary dataset compiling all relevant films related to Egypt.
+- [**`Letterboxd Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.06.29/letterboxd-mix-1to5108.csv) – A list of [**Letterboxd**](https://letterboxd.com/films/country/egypt/) movie URLs.
+- [**`IMDb Dataset`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.06.29/imdb-mix-1to6700.csv) – A collection of movies scraped from [**IMDb**](https://www.imdb.com/search/title/?title_type=feature,tv_series,short,tv_miniseries,tv_movie,tv_special,tv_short,video&countries=EG&sort=release_date,asc).
+- [**`TMDb Dataset (Movies)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.06.29/tmdb-mix-movies-1to4894.csv) – A dataset containing movies from [**TMDb**](https://developer.themoviedb.org/reference/discover-movie).
+- [**`TMDb Dataset (TV Shows)`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.06.29/tmdb-mix-tvshows-1to1469.csv) – A dataset containing TV shows from [**TMDb**](https://developer.themoviedb.org/reference/discover-tv).
+- [**`Allthings Egypt List`**](https://github.com/Prog-Jacob/allthings-egypt-cinema/releases/download/v2026.06.29/allthings-egypt.csv) – The primary dataset compiling all relevant films related to Egypt.
 
 ## Usage
 
@@ -85,7 +85,7 @@ COMMANDS
 
 ### Data Collection
 
-- **`fetch_tmdb.py`** – Fetches all movies or TV shows from the TMDb API. Requires an API key set in a `.env` file as `TMDB_API_KEY=Your-Free-Api-Key-Here`.
+- **`tmdb-api.py`** – Fetches all movies or TV shows from the TMDb API. Requires an API key set in a `.env` file as `TMDB_API_KEY=Your-Free-Api-Key-Here`.
 
 - **`scrapers/imdb.js`** – Contains functions meant to run in the browser console of IMDb pages. These include:
 
@@ -96,13 +96,14 @@ COMMANDS
 
 ### Data Processing
 
-- **`cross_check.py`** – Compares a **destination list** (CSV file) with a **host list** to identify missing movies.
+- **`cross-check.py`** – Compares a **destination list** (CSV file) with a **host list** to identify missing movies.
 - **`utils.py`** – A set of helper functions for CSV manipulation, including `loading` and `saving` files, `deduplicating` rows given a reference column, and `extracting` columns to a new CSV file.
+- **`update-list.sh`** – Automates fetching fresh data from TMDb and Letterboxd, cross-checking for new entries, updating asset files, and bumping README version/counts.
 
 ### Additional Utilities
 
 - **`fuzzydict.py`** – A custom dictionary class that extends Python’s `dict`. The `get()` method returns the closest matching key based on edit distance, useful for handling inconsistencies in movie titles.
-- **`convert_franco.py`** - A work in progress as an attempt to convert the **Franco** titles to their original titles using an LLM.
+- **`convert-franco.py`** - A work in progress as an attempt to convert the **Franco** titles to their original titles using an LLM.
 
 ## License
 
