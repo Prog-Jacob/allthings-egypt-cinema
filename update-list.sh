@@ -57,6 +57,10 @@ process_source() {
 
     if [[ "$fresh_count" -gt "$old_count" ]]; then
         local new_asset="$ASSETS_DIR/${pattern}-1to${fresh_count}.csv"
+        local backup_dir="$TEMP_DIR/backup"
+
+        mkdir -p "$backup_dir"
+        cp "$asset" "$backup_dir/"
 
         mv "$fresh_file" "$new_asset"
         rm "$asset"

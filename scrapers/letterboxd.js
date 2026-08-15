@@ -1,10 +1,14 @@
-// This script all Egyptian movies from Letterboxd
-// and saves them to a CSV file.
+// Scrapes all Egyptian movies from Letterboxd.
+// Launches a real Chrome window (Cloudflare blocks headless).
+// Persistent profile means Cloudflare challenge clears once and sticks.
 import puppeteer from "puppeteer";
 import {writeFile} from "fs/promises";
+import {join, dirname} from "path";
+import {fileURLToPath} from "url";
 
 const MAX_CONCURRENT_TABS = 5;
 const OUTPUT_FILE = "letterboxd_movies.csv";
+const PROFILE_DIR = join(dirname(fileURLToPath(import.meta.url)), ".chrome-profile");
 
 async function fetchMoviesPage(pageNum, page) {
     const url = `https://letterboxd.com/films/country/egypt/page/${pageNum}/`;
@@ -26,16 +30,38 @@ async function fetchMoviesPage(pageNum, page) {
 }
 
 async function main() {
-    const browser = await puppeteer.launch({headless: "new"});
-    const pages = [];
+    const browser = await puppeteer.launch({
+        headless: false,
+        userDataDir: PROFILE_DIR,
+        args: [
+            "--disable-blink-features=AutomationControlled",
+            "--no-first-run",
+            "--no-default-browser-check",
+        ],
+    });
 
+    // Warm-up: load one page first, wait for Cloudflare to clear
+    const warmup = await browser.newPage();
+    await warmup.evaluateOnNewDocument(() => {
+        Object.defineProperty(navigator, "webdriver", {get: () => false});
+    });
+    await warmup.goto("https://letterboxd.com/films/country/egypt/page/1/", {
+        waitUntil: "networkidle2",
+    });
+    try {
+        await warmup.waitForSelector(".film-poster a", {timeout: 30000});
+        console.log("Cloudflare cleared, starting scrape...");
+    } catch {
+        console.log("Solve the Cloudflare challenge in the browser window, then press Enter here.");
+        await new Promise((r) => process.stdin.once("data", r));
+    }
+    await warmup.close();
+
+    const pages = [];
     for (let i = 0; i < MAX_CONCURRENT_TABS; i++) {
         const page = await browser.newPage();
-        await page.setRequestInterception(true);
-        page.on("request", (req) => {
-            const type = req.resourceType();
-            if (["image", "font", "media"].includes(type)) req.abort();
-            else req.continue();
+        await page.evaluateOnNewDocument(() => {
+            Object.defineProperty(navigator, "webdriver", {get: () => false});
         });
         page.setDefaultNavigationTimeout(30000);
         pages.push(page);
